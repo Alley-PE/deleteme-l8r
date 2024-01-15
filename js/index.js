@@ -16,14 +16,33 @@ renderer.setSize(width, height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 threejsCanvas.appendChild(renderer.domElement)
 
-const geometry = new THREE.BoxGeometry(5,5,5)
-const material = new THREE.MeshBasicMaterial({ color: 0x00ffff })
-const box = new THREE.Mesh(geometry, material)
-scene.add( box )
+const geometry = new THREE.TorusGeometry( 10, 3, 16, 100);
+const material = new THREE.MeshStandardMaterial( { color: 0xFF6347, wireframe: true } ); 
+const torus = new THREE.Mesh( geometry, material ); 
 
-update()
+scene.add( torus );
 
-function update () {
-    renderer.render(scene, camera)
-    window.requestAnimationFrame(update)
-}
+const pointLight = new THREE.PointLight(0xffffff, 1000, 100)
+pointLight.position.set( 5, 5, 5)
+
+const ambientLight = new THREE.AmbientLight(0xffffff)
+scene.add(pointLight, ambientLight)
+
+torus.rotation.y = 77;
+
+function animate() {
+
+ 
+
+    requestAnimationFrame( animate );
+  
+   
+    torus.rotation.y += 0.005;
+    
+  
+  
+    renderer.render( scene, camera );
+    
+  }
+  
+  animate()
